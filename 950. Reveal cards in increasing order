@@ -1,0 +1,26 @@
+from collections import deque
+class Solution(object):
+    def deckRevealedIncreasing(self, deck):
+	        """
+	        :type deck: List[int]
+	        :rtype: List[int]
+	        """
+	        deck.sort()
+	        n=len(deck)
+	        q=deque()
+	        for i in range(n):
+		            q.append(i)     #index array
+		
+	        ans = [0] * n
+	        i = 0
+	
+	        while q:
+		            k = q.popleft()
+		            ans[k] = deck[i]
+		            i+=1
+	
+		            if q:                 #insert next card by popping from front and inserting in the back
+			               ele=q.popleft()
+			               q.append(ele)
+		                
+        return ans
