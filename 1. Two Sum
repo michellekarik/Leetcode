@@ -1,0 +1,70 @@
+/* Two Sum Problem
+Two find the index's of elements in the array that gives its sum as target value. Constraint: Only one solution exists in the array
+
+Approach1: Brute Force method(inefficient) Time complexity is O(n^2) bcz we are using 2 for loops of length of n elements.
+*/
+def two_sum(nums, target):
+    for i in range(len(nums)):
+        for j in range(i + 1, len(nums)):         # Start j from i+1 to avoid repeating pairs
+            if nums[i] + nums[j] == target:
+                return [i, j]  
+    return None  
+
+nums = [2, 7, 11, 15]
+target = 9
+
+result = two_sum(nums, target)
+print(result)                  # Output: [0, 1] because nums[0] + nums[1] == 9
+
+
+
+
+/*Approach2: Using sorting approach however this creates a time complexity of O(n log n). We first sort the array and using binary search search for the elements with value of target-num only towards the left side of the middle value. 
+
+
+Approach3(best approach): Using a two pointer approach. We keep a left pointer at the start of the array. A right pointer at the end of the array. If the nums[right]+nums[left]>target we move the right pointer leftwards. Else if move 
+the left pointer rightwards, else return the indices. Time complexity is O(n) since we go through the aray only once.
+*/
+class Solution:
+    def twoSum(self, numbers, target):
+        left = 0
+        right = len(numbers) - 1
+        
+        while left < right:
+            if numbers[left] + numbers[right] > target:
+                right -= 1  # Move right pointer leftward
+
+            elif numbers[left] + numbers[right] < target:
+                left += 1  # Move left pointer rightward
+
+            else:
+                return [left + 1, right + 1]  # Return indices (1-based indexing)
+        
+        return None  # If no solution is found
+
+sol = Solution()
+numbers = [2, 7, 11, 15]
+target = 9
+result = sol.twoSum(numbers, target)
+print(result)  # Output: [1, 2]
+Another best approach using a Hash Map
+
+
+class Solution:
+    def twoSum(self, nums, target):
+        seen = {}
+        
+        for i, num in enumerate(nums):
+            complement = target - num
+            
+            if complement in seen:
+                return [seen[complement], i] 
+            
+            seen[num] = i    #i is the index which is stored as the value in hash map cause we tryna return that index value
+        
+        return None  
+solution = Solution()
+numbers = [2, 7, 11, 15]
+target = 9
+result = solution.twoSum(numbers, target)
+print(result)                   # Output: [1, 2]
