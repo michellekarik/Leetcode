@@ -1,0 +1,19 @@
+/* Note: Contains duplicate elements in the input array, return True
+Else return False
+Approach1: We can use Brute force which means over a for loop we use an if condition to check if any duplicate elements are present, but this will create a time complexity O(n^2)
+
+Approach2: We can sort the array and then check for duplicate using a for loop. If duplicate elements are present they will be present only very next to each element. So this is better than Approach1 but creates a time complexity of O(n log n)
+Approach3(best): We insert elements that we have seen into a Hash set. If it's already in the Hash set return True because duplicate found, else just insert the new distinct element into the Hash set. Time complexity O(n). Space Complexity O(n)
+*/
+class Solution(object):
+    def containsDuplicate(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: bool
+        """
+        seen = set()
+        for num in nums:
+            if num in seen:
+                return True
+            seen.add(num)    
+        return False 
