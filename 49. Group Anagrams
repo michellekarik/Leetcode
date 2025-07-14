@@ -1,0 +1,53 @@
+/* Group Anagram
+
+Given an array of strings, you need to group the anagrams together and return the output. Example of anagrams for "cat" is "tac" "atc" and so on, where the original letters are used typically only once. Return in any order you want. Contraints: only consists of lowercase English alphabets.
+
+Input: strs = ["eat","tea","tan","ate","nat","bat"]
+
+Output: [["bat"],["nat","tan"],["ate","eat","tea"]]
+
+
+Approach 1(a good approach): Using sorting method, we sort all the strings in the given array each one sorted individually. Then we just run a for loop once and compare each string to find the strings that are the same(anagrams are the same after sorting) and return the original values from the real starting array as we know their index's.
+Time complexity is O(n logn *k) 
+n logn just to create the newly sorted array
+k the length of the longest string
+*/
+
+
+
+
+
+/*
+Approach 2(Optimal or best Solution): Using Hash Map. So we create an array with size 26 since only 26 English alphabets available in total. Now based on the value in the string array we create a string builder based on each string. Say "abc" string will return a string builder in our array of size 26 like 1110000..00 (23 zeros).
+Even "bca" "cba" would have the same string builder 11100..00. So we insert the string builder into the Hash map if it doesn’t already exist as the key. To the key we have the values "abc", "bca", "cba". Then say string "ehk" "khe" will return a string builder 0000100..00. Again string builder inserted as key in the hash map with 
+values "ehk", "khe". Now simply return the entire list of values from the hash map. 
+
+Time Complexity: O(n*k)   n is the number of strings and k is the length of max string
+Space Complexity due to hash map: O(n*k)    n is the number of strings and k is the length of the max string
+*/
+class Solution(object):
+    def groupAnagrams(self, strs):
+               if len(strs) == 0:                                   # If the input list is empty, return an empty list
+                       return []
+
+               ansMap = {}                                              # Dictionary to store lists of anagrams
+
+               for s in strs:                                                 # Iterate through each string in the list
+                      count = [0] * 26                                          # Initialize a list of 26 zeros to represent the frequency of each character
+
+                      for c in s:                                               # Count the frequency of each character in the string
+                                count[ord(c) - ord('a')] += 1
+            
+                      key = ''.join(f"#{count[i]}" for i in range(26))                     # Build the key from the character counts (use "#" as separator for the counts)
+
+                       if key not in ansMap:                                                # If the key does not exist, create a new list for it
+                                ansMap[key] = []
+            
+                        ansMap[key].append(s)                                                # Add the current string to the list corresponding to the key
+               
+                 return list(ansMap.values())                                           # Return the grouped anagrams as a list of lists
+
+sol = Solution()
+strs = ["eat", "tea", "tan", "ate", "nat", "bat"]
+result = sol.groupAnagrams(strs)
+print(result)                                                                                          # Output: [['eat', 'tea', 'ate'], ['tan', 'nat'], ['bat']]
