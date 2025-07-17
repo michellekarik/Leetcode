@@ -1,0 +1,26 @@
+class Codec:
+    def encode(self, strs):
+        if not strs:   #if empty string
+            return chr(258)
+        else:
+            separator = chr(257)
+            encoded = separator.join(strs)
+            return encoded
+
+
+    def decode(self, strs):
+        if strs == chr(258):
+            return []
+
+        else:
+            seperator = chr(257)
+            decoded = strs.split(seperator)
+            return decoded
+
+sol = Codec()
+strs = ["hello", "world"]
+result1 = sol.encode(strs)
+print(result1)
+
+result2 = sol.decode(result1)
+print(result2)
