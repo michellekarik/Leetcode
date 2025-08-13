@@ -1,0 +1,27 @@
+class Solution(object):
+    def trap(self, height):
+        """
+        :type height: List[int]
+        :rtype: int
+        """
+        left = 0
+        right = len(height) -1
+        total = 0
+        leftmax = height[0]
+        rightmax = height[right]
+
+        while left < right:
+            if height[left] < height[right]:
+                leftmax = max(leftmax, height[left])
+                if leftmax-height[left] > 0:
+                    total += leftmax-height[left]
+                left += 1
+
+            else:
+                rightmax = max(rightmax, height[right])
+                if rightmax-height[right] > 0:
+                    total += (rightmax-height[right])
+                 
+                right -= 1
+
+        return total
