@@ -1,0 +1,26 @@
+class Solution(object):
+    def characterReplacement(self, s, k):
+        """
+        :type s: str
+        :type k: int
+        :rtype: int
+        """
+        occurance = [0] * 26
+        left = 0
+        right = 0
+        ans = 0
+        maxOccurance = 0
+
+        for right in range(len(s)):
+            idx = ord(s[right]) - ord('A')  #gets the ascii value of that char A=0, B=1, C=2 etc
+            occurance[idx] += 1
+            maxOccurance = max(maxOccurance, occurance[idx])
+
+            if right - left + 1 - maxOccurance > k:
+                ids = ord(s[left]) - ord('A')
+                occurance[ids] -= 1
+                left += 1
+
+            ans = max(right-left+1, ans)   
+
+        return ans     
